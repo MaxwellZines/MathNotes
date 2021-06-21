@@ -11,3 +11,7 @@ These notes were generated using the Overleaf editor.
 The note set currently includes the following classes:
 
 - Differential Geometry
+
+## Distribution
+
+These notes are unrestricted for academic use. They may be edited, re-formatted, and re-produced without attribution.
