@@ -1,0 +1,793 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Differential Geometry [MAT4053] Notes}
+\author{Maxwell Zines}
+\date{Spring 2021 Term}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Calculus Review}
+
+The following formulas from Calculus are referenced frequently throughout the course.
+
+The position, velocity, and acceleration vectors of a parameterised curve:
+
+\[\alpha(t) = (x(t), y(t), z(t)) \]
+
+\[\alpha'(t) = (x'(t), y'(t), z'(t)) \]
+
+\[\alpha''(t) = (x''(t), y''(t), z''(t)) \]
+
+The unit tangent, normal, and binormal vectors:
+
+\[T = \frac{\alpha'(t)}{|\alpha'(t)|}\]
+
+\[N = \frac{T'(t)}{|T'(t)|}\]
+
+\[B = T \times N \]
+
+The inner product, which accept two vectors of equal dimension and returns a scalar:
+
+\[ <A,B> = \sum_{i = 1}^{n} A_{i}*B_{i}\]
+
+The Left operator:
+
+\[ <A,B>^L = <-B, A>\]
+
+\section{The Frenet Frame}
+
+The Frenet frame forms an orthonormal basis using the Tangent (T), Normal (N), and Binormal (B) vectors. The rate of change of the vectors (T', N', B') will describe how the curve moves within the frame. $\gamma''(t)$ will lie in the plane of T, N.
+
+\subsection{Speed ($\nu$)}
+
+ The magnitude of the velocity vector, $|\alpha'(t)|$ describes the {\it{speed}} of the curve $\alpha(t)$ and is denoted $\nu$. Vector $\nu$ is one of the three measurements used to construct the Frenet frame.
+ 
+ The $\nu$ vector has a few special properties. First, it is useful in constructing the vector T:
+ 
+ \[T = \frac{\alpha'(t)}{\nu} = \frac{\alpha'(t)}{\sqrt{<\alpha'(t), \alpha'(t)>}} \]
+ 
+ T' can also be calculated in the same fashion. It is quite a messy process that involves using the quotient rule. 
+ 
+ T and T', along with $\nu$, can be used to construct $\alpha'(t)$ and $\alpha''(t)$:
+ 
+ \[ \alpha'(t) = \nu T \]
+ 
+ \[ \alpha''(t) = (\nu T)' = \nu'T + \nu T' \]
+ 
+  \subsubsection{$\nu$ vector example: Helix}
+ 
+ \[ \alpha(t) = (rcos(t), rsin(t), ht) \]
+ 
+ \[\alpha'(t) = (-rsin(t), rcos(t), h) \]
+ 
+  \[\nu = \sqrt{(-rsin(t)^2 , rcos(t)^2 , h^2)} = \sqrt{r^2 + h^2} = Const. \]
+ 
+ \subsection{Curvature ($\kappa$)}
+ 
+ Loosely speaking, curvature describes how much a curve deviates from a straight path. If a curve has no curvature, then it lies in a line. There are a number of formulae used to calculate curvature:
+ 
+ \[ \kappa = \frac{|T'|}{\nu} = \frac{|\gamma'(t) \times \gamma''(t)|}{\nu^3}\] 
+ 
+ \subsubsection{$\kappa$ example: Circle}
+ 
+ \[ \gamma(t) = (rcos(t), rsin(t), 0) \]
+ 
+ \[ \gamma'(t) = (-rsin(t), rcos(t), 0) \]
+ 
+ \[|\gamma'(t)| = r = \nu \]
+ 
+ \[ T = \frac{\alpha'(t)}{|\alpha'(t)|} = (-sin(t), cos(t), 0) \]
+ 
+ \[T' = (-cos(t), -sin(t), 0)\]
+ 
+ \[|T'| = 1 \] 
+ 
+ \[\kappa = \frac{|T'|}{\nu} =  \frac{1}{r}\]
+ 
+ \subsection{The Basic Kinematic Equation}
+ 
+ The basic kinematic equation is given as:
+ 
+ \[ \gamma''(t)  = \nu'T + \kappa \nu^2 N\]
+ 
+ This equation says that motion can be described using two perpendicular vectors, one in the direction of T with magnitude $\nu'$ and the other in direction N with magnitude $\kappa \nu^2$.
+ 
+ \subsection{Torsion ($\tau$)}
+ 
+ Torsion defines the tendency of a curve to deviate from a flat plane. If a curve has no torsion, then it lies in a plane. Torsion is calculated as:
+ 
+  \[ \tau = \frac{<N',B>}{\nu}  = \frac{<(\gamma'(t) \times \gamma''(t)), \gamma'''(t)>}{(\kappa \nu^3)^2}\]
+  
+  and the expression in the numerator can be calculated simply by:
+  
+  \[
+  <(\gamma'(t) \times \gamma''(t)), \gamma'''(t)> =
+  det
+  \begin{bmatrix}
+\gamma'(t_{x}) & \gamma'(t_{y}) & \gamma'(t_{z})\\
+\gamma''(t_{x}) & \gamma''(t_{y}) & \gamma''(t_{z})\\
+ \gamma'''(t_{x}) & \gamma'''(t_{y}) & \gamma'''(t_{z})
+\end{bmatrix}
+ \]
+ 
+ \subsection{The Frenet Frame Equations}
+ 
+ Adding across each row, the {\it{Frenet Frame Equations}} are:
+
+\[ 
+\begin{bmatrix}
+T' \\
+N' \\
+B' 
+\end{bmatrix}
+=
+\begin{bmatrix}
+0T & \kappa \nu N & 0B\\
+-\kappa \nu T & 0N & \tau \nu B\\
+ 0T& -\tau \nu N & 0B
+\end{bmatrix}
+ \]
+ 
+ Where
+ 
+ \[ \tau \nu = <N', B>; -\tau \nu = <N, B'> \]
+ 
+ Together, these equations describe the motion of a curve in terms of the tangent, normal, and binormal vector.
+ 
+ \subsection{Bishop Frame}
+ 
+ The Frenet frame has a near relative, the Bishop frame. It is based in similar measurements, but it is designed to be ``minimally rotating" and it is often much easier to compute. Instead of being based in T, N, and B, the Bishop frame is based in T, $N_{1}$, and $N_{2}$.
+ 
+ Again adding across each row, the Bishop frame equations are:
+ 
+ \[ 
+\begin{bmatrix}
+T' \\
+N_{1}' \\
+N_{2}' 
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\frac{1}{\nu}<\gamma''(t), N_{1}>N_{1} & -\frac{1}{\nu}<\gamma''(t), N_{1}>N_{2} \\
+-\frac{1}{\nu}<\gamma''(t), N_{1}>T & 0\\
+0 & -\frac{1}{\nu}<\gamma''(t), N_{2}>T
+\end{bmatrix}
+ \]
+ 
+ %%%%%%%%%%%%%CURVATURE
+ 
+ \section{Curvature, Fenchel's Theorem}
+ 
+Using a convention that is intentionally similar to the familiar arc-length function presented in Calculus, the formula for total curvature is:
+
+\[\kappa_{tot} =  \int_{\gamma} \kappa ds = \int_{a}^{b} \kappa(t) \nu(t) dt\]
+
+Here is an example of the function in action:
+
+\subsection{Calculation example: Semicircle}
+
+Along a semi-circle in the upper-half of the plane for $t\in[0,\pi]$:
+
+\[ \gamma(t) = (rcos(t), rsin(t), 0) \]
+
+In 2.2.1, we found the curvature of a circle to be 1/r. We also know that our bounds for t are [0, $\pi$]:
+
+\[\kappa_{tot} = \int_{0}^{\pi} \frac{1}{r} \nu(t) dt\] 
+
+We still need to calculate the speed:
+
+\[ \gamma'(t) = (-rsin(t), rcos(t), 0) \]
+\[ |\gamma'(t)| = \sqrt{(-rsin(t)^2 + rcos(t)^2 + 0)} \]
+\[ = r \]
+
+Thus, the integral is:
+
+\[\kappa_{tot} = \int_{0}^{\pi} \frac{1}{r} r dr\] 
+
+\[= \int_{0}^{\pi} 1 dr\] 
+
+\[ = \pi \]
+
+\subsection{Fenchel's Theorem}
+
+{\it{Fenchel's Theorem}} states that, for some closed curve $\gamma(t)$,
+
+\[ \int_{\gamma}\kappa ds \geq 2\pi \]
+
+That is, the total curvature of a closed curve is at least 2$\pi$.
+
+\subsection{Signed Curvature ($\kappa_{s}$)}
+
+The signed curvature is a basis for describing which way a curve is curving. If it is curving towards $T^L$ - that is, if a car driving along the path would be turning left or navigating counterclockwise - the signed curvature is positive. 
+
+Signed curvature is zero at points of inflection.
+
+$\kappa_{s}$ is calculated as:
+
+\[<(\gamma'(t))^L,\gamma''(t)> = \kappa_{s}\nu^3\]
+
+\subsection{The Angle Function}
+The {\it{angle function}}, $\Theta(t)$, describes how the relative angle of the tangent curve changes over time. In simpler terms, it is the rotation rate of the curve.
+
+Define a vector as U($\theta$) = (cos($\theta$), sin($\theta$)) where $\theta$ is the relative angle of T, then
+
+\[ U' = U^L \Theta' \]
+\[ \Theta' = <U', U^L> \]
+
+\[\kappa_{s} \nu = <T^L, T'> \]
+
+...We are hinting at the fact that $\kappa_{s} \nu$ also gives information about the rate of rotation of a curve.
+
+By defining some starting angle $\Theta_{a}$, we can define the relative angle at any point along the curve using
+
+\[ \Theta(t) = \Theta_{a} + \int_{a}^t <T'(s), T^L (s)> ds \]
+
+Consequently, the unit tangent vector can be calculated at any point:
+
+\[T(t) = (cos \Theta(t), sin \Theta(t) \]
+
+In summary, the intuition to gain from this chapter is that $\kappa_{s}$ defines the rate of rotation of a curve - that is, the rate at which the relative angle of the unit tangent vector is changing.
+
+\[ \kappa_{s} = \frac{\Theta'}{\nu} = \frac{d\Theta}{ds} \]\
+
+The integral curvature can then be defined as
+
+\[ \int_{\gamma} \kappa_{s} ds = \Delta \Theta \]
+
+or, to put this in words, the total integral signed curvature is the net change in angle over the length of the curve.
+
+We can extend this notion to any line connecting two points $(x_0 , y_0 )$ and $(x,y)$ on a simply connected set:
+
+\[ \Theta(x,y) = \Theta(x_0 , y_0 ) + \int_{\gamma} \nabla \Theta \cdot dr \]
+
+\subsection{Rotation Index Theorem}
+
+As a consequence of the fact that the integral signed curvature of a smooth closed curve is a multiple of 2$\pi$, we can assign an integer {\it{rotation index}} to any such curve. It is defined as:
+
+\[ i(\gamma) = \frac{1}{2\pi} \int_{\gamma} \kappa_{s} ds \]
+
+The {\it{Rotation Index Theorem}} states that the rotation index of a simple closed curve (no self-intersection) is $\pm 1$.
+
+\section{Parameterised Surfaces}
+
+A parameterisation which maps some two-dimensional space (u,v) to a three-dimensional space (x, y, z) is usually denoted with $\sigma$. In general, the accepted notation is $\sigma(u,v) = (x(u,v), y(u,v), z(u,v))$.
+
+The partial derivatives of $\sigma$ are of particular interest. The subscript is used to denote whether the partial is being taken with respect to u or v (1 or 2, respectively):
+
+\[ \sigma_{1} = \frac{\partial}{\partial u} = (x_{u}, y_{u}, z_{u})\]
+\[  \sigma_{2} = \frac{\partial}{\partial v} = (x_{v}, y_{v}, z_{v}) \]
+
+This information is often presented in the form of $\sigma'$, a 3x2 matrix with each partial:
+
+\[
+  \sigma' =
+  \begin{bmatrix}
+x_{u} & x_{v} \\
+y_{u} & y_{v} \\
+z_{u} & z_{v}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\nabla x \\
+\nabla y \\
+\nabla z
+\end{bmatrix}
+ \]
+ 
+ \subsection{The Gram Matrix (g)}
+ 
+ The gram matrix is a 2x2 matrix obtained by taking all possible inner products of $\sigma_1$ and $\sigma_2$:
+ 
+ \[g =  \begin{bmatrix}
+<\sigma_1, \sigma_1> & <\sigma_2, \sigma_1> \\
+<\sigma_1, \sigma_2> & <\sigma_2, \sigma_2> \\
+\end{bmatrix}\]
+
+\subsection{The Tangent Vector (V) and Normal Vector (n)}
+
+Using our parameterisation, the tangent vector (V) can be calculated as:
+
+\[ \sigma' * v = V \]
+
+where v is the set of coordinates (1x2) at which the tangent vector exists.
+
+The normal vector (n) is calculated as
+
+\[ n = \frac{\sigma_1 \times \sigma_2}{|\sigma_1 \times \sigma_2|}\]
+
+\subsection{The Coordinate Formula}
+
+If we are given V and asked to find v, we can do so with the coordinate formula:
+
+\[v = g^{-1}\sigma'^TV \]
+\[ = g^{-1}
+\begin{bmatrix}
+<\sigma_1, V>\\
+<\sigma_2, V>\\
+\end{bmatrix}
+\]
+
+The output of this formula is a 1x2 matrix, the components of which represent the coordinates of the tangent vector.
+
+\section{The First Fundamental Form}
+For tangent vectors V and W, the first fundamental form, denoted I(V,W), is:
+
+\[I(V,W) = v^t g w = \sum_{i,j=1}^{2} g_{ij} v^i w^j\]
+
+\section{Darboux Frame}
+
+The Darboux frame is another frame in which a curve can be described. It is based in $T'$, $(T^L)'$, and n'.
+
+\subsection{Normal versus Geodesic Curvature}
+
+As opposed to normal curvature, geodesic curvature measures the curve's deviance from a geodesic path. The geodesic will be explained in greater detail later in the course (notes), but for now it suffices to know that the geodesic is the equivalent of a line on a curved surface. It is the path that a bug would trace out of they were to walk straight (from their perspective) across the path.
+
+It is related to $\kappa$ and $\kappa_{n}$ by the following:
+
+\[\kappa^2 = \kappa_{g}^2 + \kappa_{n}^2\]
+
+In a Darboux frame, normal curvature can be calculated as:
+
+\[ \kappa_{n} = \frac{<\sigma_1 \times \sigma_2, \gamma''(t)>}{\mu \nu^2} \]
+
+\subsection{Darboux Frame Equations}
+
+The Darboux frame incorporates geodesic curvature ($\kappa_g$) and geodesic torsion ($\rho$, also sometimes called {\it{twist}}).
+
+There is a friendly, simple way to determine the sign of $\kappa$ and $\rho$ in the darboux frame: Imagine walking along the path. If the road is rising ahead of you (if you are in a valley) then normal curvature ($\kappa_n$) is positive. The opposite is true of a crest.Furthermore, the sign of $\rho$ is positive if you are twisting counterclockwise.
+
+The formulas of the Darboux frame are:
+
+\[ T' = (\nu \kappa_{g})T^L + (\nu \kappa_{n})n\]
+
+\[(T^L)' = (- \nu  \kappa_{g})T + (\nu \rho)n\]
+
+\[n' =  (- \nu  \kappa_{g})T + (-\nu \rho)T^L\]
+
+In fact, these are also describing the rotation rates within the Darboux frame.
+
+In the darboux frame,
+
+\[ \gamma''(t) = \nu'T + \nu^2 (\kappa_{g} T^L + \kappa_{n} n) \]
+
+\section{Second Fundamental Form}
+
+\subsection{The L Matrix}
+
+The L matrix is a 2x2 matrix 
+
+The formula for the L matrix is
+
+\[ L_{ij} = -<\sigma_{i}, n_{j}> \]
+\[ = <\sigma_{ij}, n> \]
+
+The L matrix is used to compute normal curvature with the following formula
+
+\[ \kappa_{n} = \frac{\gamma'^T (L) \gamma'}{\gamma'^T (g) \gamma'}\]
+
+\subsection{II(V,W)}
+
+The second fundamental form, for some tangent vectors V, W and their associated coordinates v, w, is given as
+
+\[ II(V,W) = v^T L w = \sum_{i,j=1}^{2} L_{ij}v^i w^j\]
+
+This is often used to compute the normal vector because, for some vector field W along a curve $\gamma$,
+
+\[ <W', n> = II(W, \gamma') \]
+
+\subsection{$\kappa_{n}$ and $\rho$ with I(V,W) and II(V,W) }
+
+An advantage of these forms is that they provide a convenient way to calculate $\kappa_{n}$ for some curves. Assuming a curve has a defined velocity $\gamma'$ then, using both forms, $\kappa_{n}$ can be calculated by
+
+\[ \kappa_{n} = \frac{II(\gamma',\gamma')}{I(\gamma',\gamma')} \]
+
+\[ \kappa_{n} = II(T, T), \rho = II(T^L, T)\]
+
+This is the case because, for such curves, $\kappa_{n}$ depends only on the direction of the tangent vector T.
+
+\subsection{II(V,W) to find n, L example: Cone}
+
+The parameterised formula for a cone is
+
+\[ \sigma(u,v) = (ucos(v), usin(v), hu) \]
+
+The $\sigma'$ matrix is then
+
+ \[
+  \sigma' =
+  \begin{bmatrix}
+cos(v) & -usin(v)\\
+sin(v) & ucos(v)\\
+h & 0
+\end{bmatrix}
+ \]
+ 
+ Taking the cross-product of $\sigma_{1}$ and $\sigma_{2}$ yields:
+ 
+ \[ \sigma_{1} \times \sigma_{2} = (-uhcos(v), -uhsin(v), u) \]
+ 
+ \[ = u(-hcos(v), -hsin(v), 1) \]
+ 
+ Then, the length of the vector is
+ 
+\[ |\sigma_{1} \times \sigma_{2}| = u^2 (1+h^2) \]
+
+and we can determine that the normal vector n is
+
+\[n = \frac{u(-hcos(v), -hsin(v), 1)}{u \sqrt{1+h^2}} \] 
+
+Next we must find $\sigma_{ij}$. These are the second partials of $\sigma$.
+
+\[ \sigma_{1} = (cos(v), sin(v), h), \sigma_{2} = (-usin(v), ucos(v), 0) \]
+
+\[ \sigma_{11} = \frac{\partial}{\partial u} \sigma_{1} = (0,0,0)\]
+\[ \sigma_{12} = \frac{\partial}{\partial v} \sigma_{1} = (-sin(v),cos(v),0)\]
+\[ \sigma_{21} = \frac{\partial}{\partial u} \sigma_{2} = (-sin(v),cos(v),0)\]
+\[ \sigma_{22} = \frac{\partial}{\partial v} \sigma_{2} = (-ucos(v),-usin(v),0)\]
+
+The L matrix can then be calculated
+
+\[ L_{11} = <\sigma_{11}, n> = 0 \]
+
+\[ L_{12} = <\sigma_{12}, n> = 0\]
+
+\[ L_{21} = <\sigma_{21}, n> = 0\]
+
+\[ L_{22} = <\sigma_{22}, n> = \frac{-hu}{\sqrt{1+h^2}} \]
+
+And finally, the above can be used to calculate twist ($\rho$ = II($T^L, T$)).
+
+\section{Theorema Egregium}
+
+The {\it{Theorema Egregium}} states that Gaussian curvature K, made up of the two principal curvatures,
+
+\[ K = \kappa_{n} * \kappa_{g} = \frac{det(L)}{det(g)}\]
+
+is intrinsic and preserved by isometries. This is significant because det(L) alone is not intrinsic, but the ratio is.
+
+As a consequence, when K is nonzero then no isometries exist between the surfaces and no mapping can create an isometry. Either area or angle will be distorted.
+
+
+\section{Christoffel Symbols}
+
+There are 8 Christoffel symbols ($\Gamma$) for any curve, and they describe the coordinates of the projection $\pi(\sigma_{ij})$ onto the tangent space:
+
+\[ \sigma_{ij} = (\Gamma_{ij}^1)\sigma_1 + (\Gamma_{ij}^2)\sigma_2 + (L_{ij})n\]
+
+The Christoffel symbols are calculated using an analog to the coordinate formula
+
+\[ v = g^{-1} 
+ \begin{bmatrix}
+<\sigma_{1}, V>\\
+<\sigma_{2}, V>
+\end{bmatrix}
+\]
+
+\[ \vdots \]
+
+\[ 
+\begin{bmatrix}
+\Gamma_{ij}^{1}\\
+\Gamma_{ij}^{2}
+\end{bmatrix}
+= g^{-1} 
+ \begin{bmatrix}
+<\sigma_{1}, \sigma_{ij}>\\
+<\sigma_{2}, \sigma_{ij}>
+\end{bmatrix}
+\]
+
+\section{Geodesics}
+
+Imagine that a bug walks along a curved surface, in a path that they perceive to be straight. They are tracing out a geodesic on the surface. 
+
+In more technical terms - a geodesic is any path on a surface such that $\kappa_{g} = 0$.
+
+Recall that $\kappa^2 = \kappa_{n}^2 + \kappa_{g}^2$. Clearly, there must be some curvature to stay on a curved surface. But relative to the surface, there can still be a zero $\kappa_{g}$ component. This condition is met when all acceleration is tangent to the surface. This is the minimal (geodesic) path.
+
+\section{Rotation Index Revisited}
+
+In the Curvature section, the {\it{Rotation Index Theorem}} was introduced. We would like to develop a more thorough definition that includes the geodesic curvature. Recall that the original formula was given as:
+
+\[i(\gamma, V) = \frac{\Delta \Theta}{2 \pi} = \frac{1}{2 \pi} \int_{a}^{b}\Theta'(t)dt \]
+
+The ``new and improved" formula is almost exactly the same, except that we will calculate and subtract out the rotation that exists as a result of $V$, the changing vector field, while keeping the curvature $\kappa$:
+
+\[i(\gamma, V) = \frac{1}{2 \pi} \int_{\gamma} \kappa_{g} ds - \frac{1}{2 \pi} \int_{a}^{b} <V', V^L > dt\]
+
+For star-shaped surfaces (those which any interior point can be connected by a line to every perimeter point), this can also be rewritten as:
+
+\[2\pi = \int_{\gamma} \kappa_{g} ds +  \int_{int(\gamma)} K dt\]
+
+\section{Gauss-Bonnet and Triangulation}
+
+\subsection{Euler Characteristic}
+
+Imagine dividing some surface up into triangular boundaries - for instance, dividing a disc up into three equal portions.
+
+The {\it{Euler Characteristic}} is then 
+
+\[ X = T - E + V  \]
+
+where, T is the number of triangles formed, V is the number of vertices, and E is the number of edges. For the aforementioned circle, the Euler Characteristic would be 3 - 6 + 4 = 1.
+
+\subsection{Gauss-Bonnet}
+
+The angular excess of the triangulation is calculated by 2$\pi$X. This is a tremendous revelation because it allows us to calculate a lot of different characteristics of a surface without ever touching an integral. Armed with the knowledge that every triangulation of a surface has the same Euler Characteristic, we can say that
+
+\[ 2\pi X = H = \int_{\partial s} \kappa_{g} ds + \int_{S} K dA \]
+
+Where H is the total angular excess.
+
+\section{Lie Brackets}
+
+Partial derivatives are restrictive in that they only exist along the directions in which the variables are pointing. Directional derivatives, on the other hand, are not so restricted. The Lie Bracket is an extension of the directional derivative. It is given as:
+
+\[ \nabla_{V} W = \sum_{i,j} (\nabla_{V} w^j)\sigma_{j} + \sum_{i,j} w_{j} v_{i} \sigma_{ji}\]
+
+\[ \nabla_{W} V = \sum_{i,j} (\nabla_{W} v^j)\sigma_{j} + \sum_{i,j} v_{j} w_{i} \sigma_{ij}\]
+
+\[ [V,W] = \nabla_{V} W - \nabla_{W} V = \sum (\nabla_{V} w^j - \nabla_{W} v^j)\sigma_{j} \]
+
+The result is a tangent vector field.
+
+For some vector field X,
+
+\[ \nabla_{V} (\nabla_{W} X) - \nabla_{W} (\nabla_{V} X) = \nabla_{[V,W]} X \]
+
+That is, this describes how to find the directional derivative in the direction of the Lie Bracket.
+
+\subsection{Covariant Derivative}
+
+The covariant derivative is the directional derivative without the normal part - that is, the projection of the directional derivative onto the tangent plane:
+
+\[ \nabla_{W} V = \Pi(\widetilde{\nabla}_{W}V) \]
+
+Some important facts about the projection $\Pi$ onto the tangent:
+
+\[ \Pi(n) = 0, \Pi(\sigma_{1}) = \sigma_{1}, \Pi(\sigma_{2}) = \sigma_{2}\]
+
+This will be useful for greatly simplifying (and broadening the scope of) some formulas presented earlier in the class.
+
+
+ %%%%%%%%%%%%%%%%FORMULAE
+ 
+ \section{Quick reference}
+ 
+ \subsection{Equations}
+ 
+ The equations highlighted by the professor for use on the exam (MAT4053 final) are presented here in the order that they appear in the document.
+ 
+ Tangent (T):
+ 
+ \[ \gamma'(t) = \nu T \]
+ 
+ Normal (N):
+ 
+ \[ \gamma''(t) = (\nu T)' = \nu'T + \nu T' \]
+ 
+ Curvature($\kappa$):
+ 
+  \[ \kappa = \frac{|T'|}{\nu} = \frac{|\gamma'(t) \times \gamma''(t)|}{\nu^3}\] 
+  
+  Basic Kinematic Equation:
+ 
+ \[ \gamma''(t)  = \nu'T + \kappa \nu^2 N \rightarrow T' = \kappa \nu N \]
+ 
+ Torsion ($\tau$):
+ 
+  \[ \tau = \frac{<N',B>}{\nu}  = \frac{<(\gamma'(t) \times \gamma''(t)), \gamma'''(t)>}{(\kappa \nu^3)^2}\]
+  
+   \[
+  <(\gamma'(t) \times \gamma''(t)), \gamma'''(t)> =
+  det
+  \begin{bmatrix}
+\gamma'(t_{x}) & \gamma'(t_{y}) & \gamma'(t_{z})\\
+\gamma''(t_{x}) & \gamma''(t_{y}) & \gamma''(t_{z})\\
+ \gamma'''(t_{x}) & \gamma'''(t_{y}) & \gamma'''(t_{z})
+\end{bmatrix}
+ \]
+  
+  Frenet Frame Equations (add across each row):
+  
+  \[ 
+\begin{bmatrix}
+T' \\
+N' \\
+B' 
+\end{bmatrix}
+=
+\begin{bmatrix}
+0T & \kappa \nu N & 0B\\
+-\kappa \nu T & 0N & \tau \nu B\\
+ 0T& -\tau \nu N & 0B
+\end{bmatrix}
+ \]
+ 
+ \[ \tau \nu = <N', B>; -\tau \nu = <N, B'> \]
+ 
+ Bishop frame equations (add across each row):
+ 
+ \[ 
+\begin{bmatrix}
+T' \\
+N_{1}' \\
+N_{2}' 
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\frac{1}{\nu}<\gamma''(t), N_{1}>N_{1} & -\frac{1}{\nu}<\gamma''(t), N_{1}>N_{2} \\
+-\frac{1}{\nu}<\gamma''(t), N_{1}>T & 0\\
+0 & -\frac{1}{\nu}<\gamma''(t), N_{2}>T
+\end{bmatrix}
+ \]
+ 
+ Total curvature ($\kappa_{tot}$):
+ 
+ \[\kappa_{tot} =  \int_{\gamma} \kappa ds = \int_{a}^{b} \kappa(t) \nu(t) dt\]
+ 
+ Signed Curvature ($\kappa_{s}$):
+ 
+ \[<(\gamma'(t))^L,\gamma''(t)> = \kappa_{s}\nu^3\]
+ 
+ Rotation rate:
+ 
+ \[\kappa_{s} \nu = <T^L, T'> \]
+ 
+ Rotation index:
+ 
+ \[ i(\gamma) = \frac{1}{2\pi} \int_{\gamma} \kappa_{s} ds \]
+ 
+ Parameterised partials:
+ 
+ \[ \sigma_{1} = \frac{\partial}{\partial u} = (x_{u}, y_{u}, z_{u})\]
+\[  \sigma_{2} = \frac{\partial}{\partial v} = (x_{v}, y_{v}, z_{v}) \]
+
+Sigma Prime ($\sigma'$):
+
+\[
+  \sigma' =
+  \begin{bmatrix}
+x_{u} & x_{v} \\
+y_{u} & y_{v} \\
+z_{u} & z_{v}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\nabla x \\
+\nabla y \\
+\nabla z
+\end{bmatrix}
+ \]
+ 
+ Gram matrix (g):
+ 
+ \[g =  \begin{bmatrix}
+<\sigma_1, \sigma_1> & <\sigma_2, \sigma_1> \\
+<\sigma_1, \sigma_2> & <\sigma_2, \sigma_2> \\
+\end{bmatrix}\]
+
+$\mu$
+
+\[det(g)\]
+
+Tangent Vector (V):
+
+\[ \sigma' * v = V \]
+
+where v is the set of coordinates (1x2) at which the tangent vector exists.
+
+Normal Vector (n):
+
+\[ n = \frac{\sigma_1 \times \sigma_2}{|\sigma_1 \times \sigma_2|}\]
+
+Coordinate formula:
+
+\[v = g^{-1}\sigma'^TV \]
+\[ = g^{-1}
+\begin{bmatrix}
+<\sigma_1, V>\\
+<\sigma_2, V>\\
+\end{bmatrix}
+\]
+
+First fundamental form, I(V,W):
+
+\[I(V,W) = v^t*g*w\]
+
+Darboux Frame Equations:
+
+\[ T' = (\nu \kappa_{g})T^L + (\nu \kappa_{n})n\]
+
+\[(T^L)' = (- \nu  \kappa_{g})T + (\nu \rho)n\]
+
+\[n =  (- \nu  \kappa_{g})T + (-\nu \rho)T^L\]
+
+Darboux acceleration:
+
+\[ \gamma''(t) = \nu'T + \nu^2 (\kappa_{g} T^L + \kappa_{n} n) \]
+
+Darboux normal curvature:
+
+\[ \kappa_{n} = \frac{<\sigma_1 \times \sigma_2, \gamma''(t)>}{\mu \nu^2} \]
+
+Second Fundamental Form, II(V,W):
+
+\[ II(V,W) = v^T L w = \sum_{i,j=1}^{2} L_{ij}v^i w^j\]
+
+$\kappa_{n}$ and $\rho$ by the fundamental forms:
+
+\[ \kappa_{n} = \frac{II(\gamma',\gamma')}{I(\gamma',\gamma')} \]
+
+\[ \kappa_{n} = II(T, T), \rho = II(T^L, T)\]
+
+n using II(W,V) for vector field along $\gamma$:
+
+\[ <W', n> = II(W, \gamma') \]
+
+Christoffel Symbols:
+
+\[ v = g^{-1} 
+ \begin{bmatrix}
+<\sigma_{1}, V>\\
+<\sigma_{2}, V>
+\end{bmatrix}
+\]
+
+\[ \vdots \]
+
+\[ 
+\begin{bmatrix}
+\Gamma_{ij}^{1}\\
+\Gamma_{ij}^{2}
+\end{bmatrix}
+= g^{-1} 
+ \begin{bmatrix}
+<\sigma_{1}, \sigma_{ij}>\\
+<\sigma_{2}, \sigma_{ij}>
+\end{bmatrix}
+\]
+
+Euler Characteristic:
+
+\[ X = T - E + V  \]
+
+ %%%%%%%%%%%%%%%%%%
+ \subsection{Lemmas}
+ 
+ Lemma 1: $\gamma(t)$ lies on a line iff $\kappa$ = 0.
+ 
+ Lemma 2:$\gamma(t)$ lies in a plane iff $\tau$ = 0.
+ 
+ Lemma 3: $\kappa^2$ = $\kappa_{g}^2$ + $\kappa_{n}^2$.
+ 
+ \subsection{Theorems}
+ 
+ Fenchel's Theorem: The total curvature of a closed curve is greater than or equal to 2$\pi$.
+ 
+ Rotation Index Theorem: the rotation index of a simple closed curve is $\pm 1$.
+
+ 
+ %%%%%%%%%%%%%%%%PROOFS
+ 
+\section{Proofs}
+
+\subsection{T' $\perp$ T}
+ 
+ \[<T, T> \equiv 1 \]
+ 
+ \[ \frac{d}{dt}(<T, T>) = (<T, T'> + <T', T>)\]
+ 
+\[(<T, T'> + <T', T>) = 2(<T, T'>) \]
+
+\[ 2(<T, T'>) = 0 \]
+
+When the inner product of two vectors is equal to zero, they are perpendicular. QED.
+
+\end{document}
