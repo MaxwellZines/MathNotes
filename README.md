@@ -12,6 +12,10 @@ The note set currently includes the following classes:
 
 - Differential Geometry
 
+The formula sheet set currently includes the following classes:
+
+- Processor architecture and the MIPS Assembly Language
+
 ## Distribution
 
 These notes are unrestricted for academic use. They may be edited, re-formatted, and re-produced without attribution.
