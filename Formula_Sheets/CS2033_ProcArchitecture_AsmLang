@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{circuitikz}
+
+\title{CS2033 Formula sheet}
+\author{Maxwell Zines}
+\date{Fall 2020}
+
+\begin{document}
+
+\section{CPI, Instruction Count, Execution Time}
+
+\[ \textrm{Execution time} = \frac{\textrm{cycle count}}{\textrm{clock rate}} = \frac{\textrm{CPI * instruction count}}{\textrm{clock rate}} \]
+
+\[ \textrm{Clock rate} = \frac{\textrm{instruction count * CPI}}{\textrm{time}} \]
+
+\[ \textrm{Number of instructions} = \frac{\textrm{clock cycles}}{\textrm{CPI}} \]
+
+\[ \textrm{Instructions per second} = \frac{\textrm{clock rate}}{\textrm{clock cycles per instruction}} \]
+
+\[ \mbox{CPU time (multiple ins. types)} = \frac{\sum\limits_{i}^{\textrm{ins. types}} \left( \mbox{CPI$_i$} * \mbox{ instruction percentage$_i$} \right)}{\mbox{clock rate}} \]
+
+\[ \textrm{Global CPI} = \frac{\textrm{CPU time * clock rate}}{\textrm{instruction count}} \]
+
+%%%%%%%
+\section{Energy and Dynamic Power}
+%%%%%%%
+
+\[ \textrm{Capacitive load} = \frac{2 * \textrm{power}}{\textrm{voltage} * \textrm{frequency switched (Hz)}} \]
+
+\[ \textrm{Energy, pulse (0 $\to$ 1 $\to$ 0)} \propto \textrm{capacitive load} * (\textrm{voltage})^2 \]
+
+\[ \textrm{Energy, transition (0 $\to$ 1)} \propto \frac{1}{2} * \textrm{capacitive load} * (\textrm{voltage})^2 \]
+
+\[ \textrm{Power} \propto \frac{1}{2} * \textrm{capacitive load} * \textrm{frequency switched} * (\textrm{voltage})^2 \]
+
+\[ \frac{\textrm{Power$_{new}$}}{\textrm{Power$_{old}$}} = \frac{\textrm{(capacitive load * \%)} \textrm{(frequency switched * \%)} ((\textrm{voltage * \%})^2)}{ \textrm{capacitive load} * \textrm{frequency switched} * (\textrm{voltage})^2} \]
+
+%%%%%%
+\section{Wafers, Yields}
+%%%%%%
+
+\[ \textrm{Area of wafer} = \pi * \left( \frac{\textrm{diameter}}{2} \right)^2 \]
+
+\[ \textrm{Dies per wafer} \approx \frac{\textrm{wafer area}}{\textrm{die area}} \]
+
+\[ \textrm{Cost per die} = \frac{\textrm{cost per wafer}}{\textrm{dies per wafer * yield}}\]
+
+\[ \textrm{Yield} = \frac{1}{\left(1+ \left( \frac{\textrm{defects per area * die area}}{2}\right) \right)^2} \]
+
+%%%%%%
+\section{Sign Bits, FP}
+%%%%%%
+
+Exact decimals like 0.8 CANNOT be represented exactly in IEEE 754 FP.
+
+\[ \textrm{IEEE 754 FP} = (-1)^S \times (1 + fraction) \times (2^{exponent - bias}) \]
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{Sign Bit Format in IEEE 754} 
+\centering 
+\begin{tabular}{| c | c |} 
+\hline 
+  Bit value & Meaning \\ [0.5ex] 
+\hline
+0 & Non-negative number \\
+1 & Negative number \\
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+%%%%%%
+\section{2's Compliment}
+%%%%%%
+
+To obtain a two's compliment, negate the bits and add one (subtract one from the 10s representation if positive to negative). For example:
+
+\begin{verbatim}
+0111 1111 1111 1111 1111 1111 1111 1111 = 2,147,483,647
+...
+0000 0000 0000 0000 0000 0000 0000 0010 = 2
+0000 0000 0000 0000 0000 0000 0000 0001 = 1
+0000 0000 0000 0000 0000 0000 0000 0000 = 0
+1111 1111 1111 1111 1111 1111 1111 1111 = -1
+1111 1111 1111 1111 1111 1111 1111 1110 = -2
+1111 1111 1111 1111 1111 1111 1111 1101 = -3
+...
+1000 0000 0000 0000 0000 0000 0000 0000 = -2,147,483,648
+\end{verbatim}
+
+%%%%%%
+\section{Opcodes, Instructions}
+%%%%%%
+
+For R-type instructions, the opcode is equal to zero. For I-type, the opcode value will indicate the type of instruction. Common ones are: 8$_{10} \to$ addi, 35$_{10} \to$ lw, 43$_{10} \to$ sw.
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{R-type Instruction Format} 
+\centering 
+\begin{tabular}{| c | c | c | c | c | c | } 
+\hline 
+  opcode & 1st reg. & 2nd reg & reg. dest. & shift amt. & function\\ [0.5ex] 
+\hline
+6 bits & 5 bits & 5 bits & 5 bits & 5 bits & 6 bits \\
+
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{I-type Instruction Format} 
+\centering 
+\begin{tabular}{| c | c | c | c | } 
+\hline 
+  opcode & 1st reg. & 2nd reg & constant or address\\ [0.5ex] 
+\hline
+6 bits & 5 bits & 5 bits & 16 bits \\
+
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+%%%%%%
+\section{Pipelining and Hazards}
+%%%%%%
+An edge-triggered clocking methodology DOES NOT prohibit you from reading and writing into a state element within a single cycle.
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{Pipeline Hazards and Control Solutions} 
+\centering 
+\begin{tabular}{| c | c |} 
+\hline 
+  Hazard & Solution\\ [0.5ex] 
+\hline
+  Data hazard & Forwarding\\
+  Control hazard & Branch prediction \\
+  Structural hazard & Hardware component replication \\
+  Antidependency & Register renaming \\
+  Name dependency & Register renaming \\
+
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+%%%%%%
+\section{MTBF, Availability}
+%%%%%%
+
+\[ \textrm{MTBF} = \textrm{MTTF} + \textrm{MTTR} \]
+
+\[ \textrm{Availability} = \frac{\textrm{MTTF}}{\textrm{(MTTF + MTTR)}} \]
+
+%%%%%%
+\section{Logic}
+%%%%%%
+Combinational logic elements can only exhibit purely functional behavior.
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{Logic Gates} 
+\centering 
+\begin{tabular}{| c | c | c |} 
+\hline 
+  AND & OR & NOT \\ [0.5ex] 
+\hline
+{\begin{circuitikz} \draw
+(0,2) node[and port] (myand1) {};
+\end{circuitikz}} & {\begin{circuitikz} \draw
+(0,2) node[or port] (myor1) {};
+\end{circuitikz}} & {\begin{circuitikz} \draw
+(0,2) node[not port] (mynot1) {};
+\end{circuitikz}} \\
+
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+NOTES: Negation gates (NAND, NOR, NOT) are represented with a circle on the output. Flop gates (XOR, XNOR) are represented with a line through the inputs.
+
+%%%%%%
+\section{FEC, Parity Bits }
+%%%%%%
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{Parity Bit Chart, 8-bit Data + 4-bit Parity (p.421)} 
+\centering 
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c |} \hline
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ [0.5ex] 
+& p1 & p2 & d1 & p4 & d2 & d3 & d4 & p8 & d5 & d6 & d7 & d8 \\ \hline
+p1 & x & & x & & x & & x & & x & & x & \\ \hline
+p2 & & x & x & & & x & x & & & x & x & \\ \hline
+p4 & & & & x & x & x & x & & & & & x\\ \hline
+p8 & & & & & & & & x & x & x & x & x\\
+
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+%%%%%%
+\section{Table of Metric Values}
+%%%%%%
+
+%% BEGIN TABLE
+\begin{table}[ht]
+\caption{Metric values} 
+\centering 
+\begin{tabular}{ c | c | c} 
+\hline 
+  Standard symbol & Prefix & Value \\ [0.5ex] 
+\hline
+$\mu$ & Micro & $10^{-6}$  \\
+ m & Milli & $10^{-3}$   \\
+ k & Kilo & $10^3$ \\
+ M & Mega & $10^6$ \\
+ G & Giga & $10^9$ \\
+\hline
+\end{tabular}
+\label{table:nonlin} 
+\end{table}
+%% END TABLE 
+
+\end{document}
