@@ -1,2 +1,0 @@
-- name: LaTeX compilation
-  uses: dante-ev/latex-action@2021-A
