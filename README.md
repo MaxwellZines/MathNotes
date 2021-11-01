@@ -19,6 +19,7 @@ The note set currently includes the following classes:
 The formula sheet set currently includes the following classes:
 
 - Processor architecture and the MIPS Assembly Language
+  - Uses TeX package circuitikz
 
 ## Technical Information
 
