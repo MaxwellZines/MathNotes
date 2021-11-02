@@ -28,3 +28,13 @@ These documents were prepared using the Overleaf TeX editor.
 ## Distribution
 
 These resources may be freely distributed and revised. Revisions, edits, additions, and corrections are invited and encouraged! 
+
+## Pages in Progress
+
+The following note pages are actively being transcribed and prepared:
+
+- Differential Equations
+- Computational Statistics (Wolfram)
+- Complex Functions
+- PDEs
+- Numerical Metods
